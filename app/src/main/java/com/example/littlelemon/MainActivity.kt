@@ -1,5 +1,6 @@
 package com.example.littlelemon
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -9,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +18,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,29 +39,37 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.littlelemon.ui.theme.TopAppBar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //HomeScreen()
-            LoginScreen()
+            HomeScreen()
+            //LoginScreen()
         }
     }
 }
 
 @Composable
-fun AppScreen(){
+fun AppScreen() {
     var count by rememberSaveable() {
         mutableStateOf(0)
     }
-    counter(count, {count++}, {count--})
+    counter(count, { count++ }, { count-- })
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(){
-    Column {
-        UpperPanel()
-        LowerPanel()
+fun HomeScreen() {
+    Scaffold(
+        topBar = { TopAppBar() }
+    ) {
+        Column (modifier = Modifier.padding(top = 50.dp)) {
+            UpperPanel()
+            LowerPanel()
+        }
     }
 }
+
