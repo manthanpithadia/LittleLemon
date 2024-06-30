@@ -1,44 +1,36 @@
 package com.example.littlelemon
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.littlelemon.ui.theme.Pink80
+import com.example.littlelemon.ui.theme.Purple80
+import com.example.littlelemon.ui.theme.PurpleGrey80
 import com.example.littlelemon.ui.theme.TopAppBar
 
 class MainActivity : ComponentActivity() {
@@ -63,13 +55,106 @@ fun AppScreen() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen() {
-    Scaffold(
-        topBar = { TopAppBar() }
-    ) {
-        Column (modifier = Modifier.padding(top = 50.dp)) {
-            UpperPanel()
-            LowerPanel()
+
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    ModalNavigationDrawer(drawerState = drawerState, drawerContent = {
+        DrawerPanel(scope, drawerState)
+    }) {
+        Scaffold(
+            topBar = { TopAppBar(scope, drawerState) }
+        ) {
+            Column(modifier = Modifier.padding(top = 100.dp)) {
+                /*UpperPanel()
+                LowerPanel()*/
+                MenuContent(paddingValues = it)
+            }
         }
     }
 }
+
+@Composable
+fun MenuContent(paddingValues: PaddingValues) {
+    val configuration = LocalConfiguration.current
+    when(configuration.orientation){
+        ORIENTATION_LANDSCAPE -> Column() {
+            val menuPadding = 8.dp
+            Row(modifier = Modifier.weight(0.5f)) {
+                Text(
+                    "Appetizers",
+                    modifier = Modifier
+                        .weight(0.25f)
+                        .background(Purple80)
+                        .padding(menuPadding)
+                        .fillMaxHeight()
+                )
+                Text(
+                    "Salads",
+                    modifier = Modifier
+                        .weight(0.25f)
+                        .padding(menuPadding)
+                        .fillMaxHeight()
+                )
+            }
+
+            Row(modifier = Modifier.weight(0.5f)) {
+                Text(
+                    "Drinks",
+                    modifier = Modifier
+                        .weight(0.25f)
+                        .background(Pink80)
+                        .padding(menuPadding)
+                        .fillMaxHeight()
+                )
+                Text(
+                    "Mains",
+                    modifier = Modifier
+                        .weight(0.25f)
+                        .background(PurpleGrey80)
+                        .padding(menuPadding)
+                        .fillMaxHeight()
+                )
+            }
+        }
+            else->     Surface(modifier = Modifier.padding(paddingValues)) {
+                val menuPadding = 8.dp
+                Column {
+                    Text(
+                        "Appetizers",
+                        modifier = Modifier
+                            .weight(0.25f)
+                            .background(Purple80)
+                            .padding(menuPadding)
+                            .fillMaxWidth()
+                    )
+                    Text(
+                        "Salads",
+                        modifier = Modifier
+                            .weight(0.25f)
+                            .padding(menuPadding)
+                            .fillMaxWidth()
+                    )
+                    Text(
+                        "Drinks",
+                        modifier = Modifier
+                            .weight(0.25f)
+                            .background(Pink80)
+                            .padding(menuPadding)
+                            .fillMaxWidth()
+                    )
+                    Text(
+                        "Mains",
+                        modifier = Modifier
+                            .weight(0.25f)
+                            .background(PurpleGrey80)
+                            .padding(menuPadding)
+                            .fillMaxWidth()
+                    )
+                }
+            }
+
+    }
+}
+
 
