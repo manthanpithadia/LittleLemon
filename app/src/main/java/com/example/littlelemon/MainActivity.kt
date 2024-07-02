@@ -20,14 +20,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.littlelemon.nav.Home
+import com.example.littlelemon.nav.MenuList
+import com.example.littlelemon.nav.MenuListScreen
+import com.example.littlelemon.nav.practice
 import com.example.littlelemon.ui.theme.Pink80
 import com.example.littlelemon.ui.theme.Purple80
 import com.example.littlelemon.ui.theme.PurpleGrey80
@@ -37,24 +41,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeScreen()
-            //LoginScreen()
+            MyNavigation()
         }
     }
 }
 
+
 @Composable
-fun AppScreen() {
-    var count by rememberSaveable() {
-        mutableStateOf(0)
+fun MyNavigation() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = Home.route) {
+        composable(Home.route){
+            practice(navController)
+        }
+        composable(MenuList.route){
+            MenuListScreen()
+        }
     }
-    counter(count, { count++ }, { count-- })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
