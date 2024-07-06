@@ -38,7 +38,7 @@ fun practice(navController: NavHostController) {
     ) {
         Text(text = "Home Screen", fontSize = 32.sp)
         Button(
-            onClick = { navController.navigate(MenuList.route) },
+            onClick = {  },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF4CE14))
         ) {
             Text(text = "Order Take Away", color = Color.Black)

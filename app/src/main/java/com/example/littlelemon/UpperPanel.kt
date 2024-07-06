@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 
 @Composable
@@ -72,7 +73,7 @@ fun UpperPanel() {
             )
         }
         Button(
-            onClick = { Toast.makeText(context, "Order Received", Toast.LENGTH_SHORT).show()},
+            onClick = { },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0XFFF4CE14))
         ) {
@@ -88,5 +89,5 @@ fun UpperPanel() {
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun previewFunction() {
-    UpperPanel()
+    //UpperPanel(navController)
 }

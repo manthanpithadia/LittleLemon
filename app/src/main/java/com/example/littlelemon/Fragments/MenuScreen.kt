@@ -1,4 +1,4 @@
-package com.example.littlelemon.nav
+package com.example.littlelemon.Fragments
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,13 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MenuListScreen() {
+fun MenuScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Menu List",
+        Text(text = "Menu Screen",
             fontSize = 32.sp)
     }
 }
